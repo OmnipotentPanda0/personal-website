@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '@/app/components/Navbar'
 import Image from 'next/image'
 import { FaFileDownload } from "react-icons/fa";
 
