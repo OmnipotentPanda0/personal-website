@@ -15,7 +15,7 @@ function ProjectCard(props: Props) {
 
     return (
         <Link href={"/projects/" + link}>
-            <div className='w-[326px] h-[435px] font-ubuntu'>
+            <div className='w-[326px] h-[435px] font-ubuntu hover:-translate-y-3 transition-all'>
                 <div className=''>
                     <Image src={"/images/project_cards/" + image} height={500} width={500} alt='network' className='rounded-t-xl'></Image>
                     <h1 className='text-2xl font-bold mt-4'>{title}</h1>

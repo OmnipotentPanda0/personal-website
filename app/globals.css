@@ -47,3 +47,38 @@ body {
 .appear-animation {
   animation: slideInFromRight 0.5s ease-out forwards;
 }
+
+
+@keyframes wiggle {
+  0%, 100% {
+      transform: rotate(0deg);
+  }
+  25% {
+      transform: rotate(5deg);
+  }
+  50% {
+      transform: rotate(-5deg);
+  }
+  75% {
+      transform: rotate(5deg);
+  }
+}
+
+.wiggle1 {
+  animation: wiggle 0.5s infinite;
+}
+
+.wiggle2 {
+  animation: wiggle 0.5s infinite;
+  animation-delay: 0.1s;
+}
+
+.wiggle3 {
+  animation: wiggle 0.5s infinite;
+  animation-delay: 0.2s;
+}
+
+.wiggle4 {
+  animation: wiggle 0.5s infinite;
+  animation-delay: 0.3s;
+}
