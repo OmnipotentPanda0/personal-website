@@ -10,7 +10,7 @@ interface Props {
     überblick: string;
     schlüsselerkenntnisse: string[];
     bedeutungUndImplikationen: string;
-    projectLink: string;
+    projectLink?: string;
 }
 
 function ProjectSite(props: Props) {

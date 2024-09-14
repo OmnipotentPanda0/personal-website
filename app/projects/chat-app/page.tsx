@@ -24,6 +24,7 @@ function Page(props: Props) {
                     ]
                 }
                 bedeutungUndImplikationen='Dieses Projekt zeigt das Potenzial von P2P-Technologien für direkte, schnelle und sichere Kommunikation zwischen Nutzern ohne zentrale Server. Die Kombination von PeerJS und WebSockets ermöglicht nicht nur Echtzeitkommunikation, sondern vereinfacht auch den Austausch von Dateien, was es zu einer robusten Grundlage für dezentrale Anwendungen macht. Dies könnte auf verschiedene Anwendungsfälle übertragen werden, darunter sichere Datenübertragungen, verschlüsselte Kommunikationsdienste und andere dezentrale Netzwerkanwendungen.'
+                
             ></ProjectSite>
 
         </>
