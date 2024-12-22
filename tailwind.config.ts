@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        customColor: "#AFAE9E",
       },
       fontFamily: {
         ubuntu: ['"Ubuntu"', 'sans-serif'],
