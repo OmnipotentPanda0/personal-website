@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
+import lineClamp from "@tailwindcss/line-clamp";
 
 const config: Config = {
   content: [
@@ -14,13 +16,15 @@ const config: Config = {
         customColor: "#AFAE9E",
       },
       fontFamily: {
-        ubuntu: ['"Ubuntu"', 'sans-serif'],
+  ubuntu: ['"Ubuntu"', 'sans-serif'],
+  montserrat: ['"Montserrat"', 'sans-serif'],
+  roboto: ['"Roboto"', 'sans-serif'],
       },
       screens: {
         'res': { 'max': '1138px' }, // Custom breakpoint for screens smaller than 1138px
       },
     },
   },
-  plugins: [],
+  plugins: [typography, lineClamp],
 };
 export default config;

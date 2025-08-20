@@ -1,4 +1,4 @@
-import Navbar from '@/app/components/Navbar'
+import MainNavbar from '@/app/components/MainNavbar'
 import React from 'react'
 
 interface Props { }
@@ -8,7 +8,7 @@ function Page(props: Props) {
 
     return (
         <>
-            <Navbar selected="Projects"></Navbar>
+            <MainNavbar selected="Projects" />
             <div className='flex w-full h-screen justify-center items-center'>
                 <h1 className='text-2xl font-bold mb-52'>Bald Verfügbar...</h1>
             </div>

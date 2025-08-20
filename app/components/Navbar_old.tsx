@@ -9,7 +9,7 @@ interface Props {
 function Navbar({ selected }: Props) {
 
     return (
-        <div className='font-montserrat flex justify-around h-24 items-center'>
+        <div className='font-ubuntu flex justify-around h-24 items-center'>
             {/* Sieht geil aus aber passt nicht
             <h1 className='font-bold text-2xl bg-gradient-to-r from-red-500 via-blue-500 to-green-500 bg-clip-text text-transparent'>Johann Setzer</h1> */}
             <h1 className='font-bold text-2xl bg-gradient-to-r from-foreground to-purple-900 bg-clip-text text-transparent'>Johann Setzer</h1>

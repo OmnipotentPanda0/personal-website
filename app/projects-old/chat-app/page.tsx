@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "@/app/components/Navbar";
+import MainNavbar from "@/app/components/MainNavbar";
 import ProjectSite from "@/app/components/projects/ProjectSite";
 
 interface Props {}
@@ -9,7 +9,7 @@ function Page(props: Props) {
 
   return (
     <>
-      <Navbar selected="Projects"></Navbar>
+  <MainNavbar selected="Projects" />
       <ProjectSite
         title="WebRTC ChatApp – Direkt und Sicher"
         subtitle="Ein Echtzeit-Chatroom, in dem Sie direkt mit anderen Nutzern kommunizieren und Dateien austauschen – ohne Server dazwischen, dank der direkten Peer-to-Peer-Verbindung über WebRTC."

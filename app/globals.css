@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PrismJS theme for code highlighting */
+@import 'prismjs/themes/prism-tomorrow.css';
+
+/* Align Prism's defaults with our CodeSnippet wrapper */
+.code-snippet pre[class*="language-"] {
+  background: #0b1220; /* match Tailwind bg-slate-900 */
+  margin: 0;
+}
+.code-snippet code[class*="language-"] {
+  background: transparent;
+}
+
 :root {
   --background: #D2D4C6;
   --foreground: #1F203F;
@@ -20,11 +32,15 @@
 
 html, body {
   color: var(--foreground);
-  background: var(--background);
+  /* background removed to allow layout.tsx background to show */
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+body {
+  min-height: 100vh; /* Ensure the global background covers full viewport */
 }
 
 @layer utilities {

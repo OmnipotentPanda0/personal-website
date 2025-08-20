@@ -1,25 +1,34 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import ProjectCard from '../components/projects/ProjectCard'
+import PageTemplate from '@/app/components/PageTemplate';
+import ProjectCard from '@/app/components/projects/ProjectCard';
+import { getAllProjects } from '@/lib/contentful';
 
-interface Props { }
+export const revalidate = 3600;
 
-function Page(props: Props) {
-    const { } = props
+export default async function Page() {
+  const projects = await getAllProjects();
 
-    return (
-        <>
-            <Navbar selected="Projects"></Navbar>
-            <div className='flex justify-center pt-10'>
-                <div className='grid grid-cols-3 gap-6 res:flex res:flex-col'>
-                    <ProjectCard link='chat-app' title='WebRTC ChatApp – Direkt und Sicher' description='Ein Echtzeit-Chatroom, in dem Sie direkt mit anderen Nutzern kommunizieren und Dateien austauschen – ohne Server dazwischen, dank der direkten Peer-to-Peer-Verbindung über WebRTC.' image='WebRTCApp.png'></ProjectCard>
-                    <ProjectCard link='financial' title='Einmalzahlung oder Rente – Was lohnt sich mehr?' description='Mit dieser Excel-Tabelle berechnen Sie, ob eine Einmalzahlung oder eine lebenslange Rente finanziell vorteilhafter ist. Die Berechnungen basieren auf finanzmathematischen Modellen für eine fundierte Entscheidung.' image='money.jpg'></ProjectCard>
-                    <ProjectCard link='dax-correlation' title='DAX-Korrelationen – Aktien im Vergleich' description='In diesem Projekt berechne und visualisiere ich den Korrelationsindex aller DAX-Aktien. So wird deutlich, wie stark die Kurse der einzelnen Aktien miteinander verbunden sind.' image='stocks.jpg'></ProjectCard>
-                </div>
+  return (
+    <PageTemplate selected="Projects">
+      <div className="flex justify-center pt-10 min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {projects.map((p) => (
+            <ProjectCard
+              key={p.slug}
+              basePath="/projects"
+              link={p.slug}
+              title={p.title}
+              description={p.excerpt}
+              image={p.coverImage}
+              tags={p.tags}
+            />
+          ))}
+          {projects.length === 0 && (
+            <div className="col-span-full text-center text-gray-600">
+              Keine Inhalte gefunden. Prüfe ENV (.env.local) und dass dein Blog Post veröffentlicht ist.
             </div>
-
-        </>
-    )
+          )}
+        </div>
+      </div>
+    </PageTemplate>
+  );
 }
-
-export default Page
