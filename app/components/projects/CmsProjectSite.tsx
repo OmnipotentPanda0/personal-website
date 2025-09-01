@@ -2,10 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import { FaFileDownload } from 'react-icons/fa';
 import type { CmsProject, TextBlock, ImageBlock, VideoBlock, CodeBlock, QuoteBlock, GalleryBlock } from '@/types/cms_project';
-import { documentToReactComponents, type Options } from '@contentful/rich-text-react-renderer';
-import { BLOCKS, INLINES, MARKS, type Document } from '@contentful/rich-text-types';
+import { type Document } from '@contentful/rich-text-types';
 import CodeSnippet from './CodeSnippet';
 import Gallery from './Gallery';
+import { renderSimpleRichText } from './SimpleRichText';
 
 type Props = {
   project: CmsProject;
@@ -23,8 +23,7 @@ function formatDate(iso?: string | null) {
 function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlock | QuoteBlock | GalleryBlock, index: number) {
   switch (block.type) {
     case 'textBlock':
-      // The body is expected to be a JSON string of Contentful Rich Text Document.
-      // Fallback: if it's not valid JSON, render as plain text.
+      // Parse rich text document
       let richDoc: Document | null = null;
       try {
         const parsed = typeof block.body === 'string' ? JSON.parse(block.body) : block.body;
@@ -35,106 +34,15 @@ function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlo
         richDoc = null;
       }
 
-      const options: Options = {
-        renderMark: {
-          [MARKS.BOLD]: (text) => <strong>{text}</strong>,
-          [MARKS.ITALIC]: (text) => <em>{text}</em>,
-          [MARKS.UNDERLINE]: (text) => <u>{text}</u>,
-          [MARKS.CODE]: (text) => (
-            <code className="px-1.5 py-0.5 rounded bg-gray-200 text-gray-900">
-              {text}
-            </code>
-          ),
-        },
-        renderNode: {
-          [BLOCKS.PARAGRAPH]: (_node, children) => (
-            <p className="leading-6 sm:leading-7 md:leading-8 my-2 sm:my-3 text-sm sm:text-base">{children}</p>
-          ),
-          [BLOCKS.HEADING_1]: (_node, children) => (
-            <h1 className="mt-6 sm:mt-8 mb-2 sm:mb-3 text-xl sm:text-2xl md:text-3xl font-montserrat font-semibold">{children}</h1>
-          ),
-          [BLOCKS.HEADING_2]: (_node, children) => (
-            <h2 className="mt-6 sm:mt-8 mb-1.5 sm:mb-2 text-lg sm:text-xl md:text-2xl font-montserrat font-semibold">{children}</h2>
-          ),
-          [BLOCKS.HEADING_3]: (_node, children) => (
-            <h3 className="mt-4 sm:mt-6 mb-1.5 sm:mb-2 text-base sm:text-lg md:text-xl font-montserrat font-semibold">{children}</h3>
-          ),
-          [BLOCKS.HEADING_4]: (_node, children) => (
-            <h4 className="mt-3 sm:mt-4 mb-1 sm:mb-1.5 text-sm sm:text-base md:text-lg font-montserrat font-semibold">{children}</h4>
-          ),
-          [BLOCKS.HEADING_5]: (_node, children) => <h5 className="mt-3 mb-1 font-montserrat font-semibold">{children}</h5>,
-          [BLOCKS.HEADING_6]: (_node, children) => <h6 className="mt-3 mb-1 font-montserrat font-semibold">{children}</h6>,
-          [BLOCKS.UL_LIST]: (_node, children) => (
-            <ul className="my-3 sm:my-4 pl-4 sm:pl-6 md:pl-7 list-outside space-y-1.5 sm:space-y-2.5">{children}</ul>
-          ),
-          [BLOCKS.OL_LIST]: (_node, children) => (
-            <ol className="my-3 sm:my-4 pl-4 sm:pl-6 md:pl-7 list-outside space-y-1.5 sm:space-y-2.5">{children}</ol>
-          ),
-          [BLOCKS.LIST_ITEM]: (_node, children) => (
-            <li className="leading-6 sm:leading-7 md:leading-8 marker:text-[var(--kik)] [&>p]:my-0 [&_ul]:mt-2 [&_ol]:mt-2 text-sm sm:text-base">
-              {children}
-            </li>
-          ),
-          [BLOCKS.QUOTE]: (_node, children) => (
-            <blockquote className="border-l-2 sm:border-l-4 border-blue-500 pl-3 sm:pl-4 py-2 my-4 sm:my-6 italic text-sm sm:text-base">{children}</blockquote>
-          ),
-          [BLOCKS.HR]: () => <hr className="my-6 sm:my-8 border-gray-200" />,
-          [BLOCKS.EMBEDDED_ASSET]: (node) => {
-            // Optional: if Contentful provides assets inside rich text
-            // Try to read URL/caption from node.data.target.fields
-            const fields = (node as any)?.data?.target?.fields;
-            const fileUrl = fields?.file?.url || fields?.file?.en?.url || fields?.file?.['en-US']?.url;
-            const title = fields?.title || fields?.title?.en || fields?.title?.['en-US'];
-            if (!fileUrl) return null;
-            const src = fileUrl.startsWith('http') ? fileUrl : `https:${fileUrl}`;
-            return (
-              <figure>
-                <Image src={src} alt={title || ''} width={1000} height={600} className="rounded w-full" />
-                {title && <figcaption className="text-xs sm:text-sm mt-2 text-center italic font-roboto">{title}</figcaption>}
-              </figure>
-            );
-          },
-          [INLINES.HYPERLINK]: (node, children) => {
-            const uri = (node.data as any)?.uri as string | undefined;
-            return (
-              <a
-                href={uri}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-700 hover:text-blue-800 underline-offset-2 hover:underline"
-              >
-                {children}
-              </a>
-            );
-          },
-        },
-      };
-
-      return (
-  <div
-          key={index}
-          className="prose max-w-none mb-6 sm:mb-8
-      prose-headings:font-montserrat prose-headings:font-semibold prose-headings:text-[#2C3E50]
-            prose-h1:mt-6 sm:prose-h1:mt-8 prose-h1:mb-2 sm:prose-h1:mb-3 prose-h1:text-xl sm:prose-h1:text-2xl md:prose-h1:text-3xl
-            prose-h2:mt-6 sm:prose-h2:mt-8 prose-h2:mb-1.5 sm:prose-h2:mb-2 prose-h2:text-lg sm:prose-h2:text-xl md:prose-h2:text-2xl
-            prose-h3:mt-4 sm:prose-h3:mt-6 prose-h3:mb-1.5 sm:prose-h3:mb-2 prose-h3:text-base sm:prose-h3:text-lg md:prose-h3:text-xl
-            prose-h4:mt-3 sm:prose-h4:mt-4 prose-h4:mb-1 sm:prose-h4:mb-1.5 prose-h4:text-sm sm:prose-h4:text-base md:prose-h4:text-lg
-      prose-p:leading-6 sm:prose-p:leading-7 md:prose-p:leading-8 prose-p:text-[#2C3E50] prose-p:font-roboto prose-p:text-sm sm:prose-p:text-base
-      prose-li:text-[#2C3E50] prose-li:font-roboto prose-li:text-sm sm:prose-li:text-base
-            prose-a:text-blue-700 hover:prose-a:text-blue-800 prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-[#2C3E50]
-            prose-code:bg-gray-100 prose-code:px-1 sm:prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs sm:prose-code:text-sm
-      prose-ul:list-disc prose-ol:list-decimal
-            prose-blockquote:border-l-2 sm:prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-3 sm:prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-[#2C3E50] prose-blockquote:text-sm sm:prose-blockquote:text-base
-            prose-img:rounded-lg prose-img:w-full"
-        >
-          {richDoc ? (
-            documentToReactComponents(richDoc, options)
-          ) : (
-            <pre className="whitespace-pre-wrap break-words">{block.body}</pre>
-          )}
-        </div>
-      );
+      if (richDoc) {
+        return renderSimpleRichText(richDoc, index);
+      } else {
+        return (
+          <div key={index} className="mb-6">
+            <pre className="whitespace-pre-wrap break-words text-gray-800">{block.body}</pre>
+          </div>
+        );
+      }
     
     case 'imageBlock':
       return (
@@ -144,6 +52,8 @@ function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlo
             alt={block.imageTitle || block.caption || ''} 
             width={1000} 
             height={600} 
+            loading="lazy"
+            decoding="async"
             className="w-full rounded-lg"
           />
           {(block.imageTitle || block.imageDescription || block.caption) && (
@@ -177,7 +87,7 @@ function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlo
                 src={block.videoFile.url.startsWith('http') ? block.videoFile.url : `https:${block.videoFile.url}`}
                 controls
                 playsInline
-                preload="metadata"
+                preload="none"
                 aria-label={block.videoFile.title}
               >
                 {block.videoFile.contentType && (
@@ -277,7 +187,8 @@ export default function CmsProjectSite({ project }: Props) {
               width={2000}
               height={1200}
               alt={coverImageTitle || title}
-              priority
+              loading="eager"
+              decoding="async"
               sizes="(min-width: 1280px) 1200px, (min-width: 1024px) 1000px, (min-width: 768px) 90vw, 100vw"
             />
             {(coverImageTitle || coverImageDescription) && (
