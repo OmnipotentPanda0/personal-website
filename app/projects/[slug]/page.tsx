@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     // <LocoProvider>
-    <PageTemplate selected="Projects">
+    <PageTemplate selected="Projects" animate={false}>
       <CmsProjectSite project={project} />
     </PageTemplate>
     // </LocoProvider>
