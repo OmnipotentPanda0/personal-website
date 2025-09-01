@@ -21,8 +21,8 @@ async function cf<T>(query: string, variables?: Record<string, unknown>): Promis
         Authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({ query, variables }),
-      // SSG + ISR friendly
-      next: { revalidate: 3600 },
+  // Pure SSG: build-time cache only
+  cache: 'force-cache',
     }
   );
 

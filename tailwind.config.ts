@@ -17,8 +17,8 @@ const config: Config = {
       },
       fontFamily: {
   ubuntu: ['"Ubuntu"', 'sans-serif'],
-  montserrat: ['"Montserrat"', 'sans-serif'],
-  roboto: ['"Roboto"', 'sans-serif'],
+  montserrat: ['var(--font-montserrat)', 'Montserrat', 'system-ui', 'sans-serif'],
+  roboto: ['var(--font-roboto)', 'Roboto', 'system-ui', 'sans-serif'],
       },
       screens: {
         'res': { 'max': '1138px' }, // Custom breakpoint for screens smaller than 1138px

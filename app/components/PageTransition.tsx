@@ -10,7 +10,9 @@ interface PageTransitionProps {
 export default function PageTransition({ children }: PageTransitionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+  // Allow fade on route changes; AnimatePresenceProvider sets initial={false}
+  // so the very first render won't animate and won't delay LCP.
+  initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{

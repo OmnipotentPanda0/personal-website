@@ -4,7 +4,10 @@ import CmsProjectSite from '@/app/components/projects/CmsProjectSite';
 // import LocoProvider from '@/app/components/LocoProvider';
 import { getAllProjectSlugs, getProjectBySlug, isContentfulConfigured } from '@/lib/contentful';
 
-export const revalidate = 3600;
+// Strict SSG: no ISR or on-demand generation
+export const revalidate = false;
+export const dynamicParams = false;
+export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
   if (!isContentfulConfigured) return [];

@@ -229,8 +229,9 @@ function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlo
 
 export default function CmsProjectSite({ project }: Props) {
   const { title, excerpt, coverImage, publishDate, contentBlocks, tags, coverImageTitle, coverImageDescription } = project;
-
-  const src = coverImage?.startsWith('http') ? coverImage : (coverImage ? `/images/projects/${coverImage}` : '/images/projects/WebRTCApp.png');
+  const src = coverImage?.startsWith('http')
+    ? coverImage
+    : (coverImage ? `/images/projects/${coverImage}` : '/images/projects/WebRTCApp.png');
   const dateText = formatDate(publishDate);
 
   return (
@@ -270,7 +271,15 @@ export default function CmsProjectSite({ project }: Props) {
         
         {src && (
           <div className="overflow-hidden mt-4 sm:mt-6 -mx-4 sm:-mx-4 md:-mx-10 lg:-mx-20 xl:-mx-28">
-            <Image className="w-full rounded-none sm:rounded-lg" src={src} width={2000} height={1200} alt={coverImageTitle || title} />
+            <Image
+              className="w-full rounded-none sm:rounded-lg"
+              src={src}
+              width={2000}
+              height={1200}
+              alt={coverImageTitle || title}
+              priority
+              sizes="(min-width: 1280px) 1200px, (min-width: 1024px) 1000px, (min-width: 768px) 90vw, 100vw"
+            />
             {(coverImageTitle || coverImageDescription) && (
               <div className="mt-2 text-xs sm:text-sm font-roboto px-4 sm:px-0">
                 <div className="flex items-center">

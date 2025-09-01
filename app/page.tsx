@@ -1,4 +1,5 @@
 import PageTemplate from "./components/PageTemplate";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -40,9 +41,13 @@ export default function Home() {
             </div>
           </div>
           <div className="flex-shrink-0 order-1 lg:order-2">
-            <img
+            <Image
               src="/images/head.png"
               alt="Head"
+              width={384}
+              height={384}
+              priority
+              sizes="(min-width: 1024px) 24rem, (min-width: 768px) 16rem, (min-width: 640px) 14rem, 12rem"
               className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-96 lg:h-96 object-cover rounded-full shadow-[0_6px_20px_rgba(74,144,226,0.18)] transition-shadow duration-300 hover:shadow-[0_10px_28px_rgba(74,144,226,0.28)]"
             />
           </div>
