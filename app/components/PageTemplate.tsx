@@ -1,7 +1,10 @@
 import { ReactNode } from 'react';
 import MainNavbar from './MainNavbar';
+import dynamic from 'next/dynamic';
 import PageTransition from './PageTransition';
-import AnimatePresenceProvider from './AnimatePresenceProvider';
+
+// Lazy-load the client-only animation shell to keep pages without animations pure server components
+const AnimatedShell = dynamic(() => import('./AnimatedShell'), { ssr: true });
 
 type SelectedKey = 'Home' | 'Projects' | 'Contact';
 
@@ -23,11 +26,7 @@ export default function PageTemplate({ children, selected, animate = true }: Pag
       
       {/* Nur den Content animieren, falls aktiviert */}
       {animate ? (
-        <AnimatePresenceProvider>
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </AnimatePresenceProvider>
+        <AnimatedShell>{children}</AnimatedShell>
       ) : (
         children
       )}
