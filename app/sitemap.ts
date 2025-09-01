@@ -1,0 +1,44 @@
+import type { MetadataRoute } from 'next';
+
+import { getAllProjectSlugs, isContentfulConfigured } from '@/lib/contentful';
+
+function getBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL;
+  if (envUrl) return envUrl.replace(/\/$/, '');
+  const vercel = process.env.VERCEL_URL;
+  if (vercel) return `https://${vercel.replace(/\/$/, '')}`;
+  return 'http://localhost:3000';
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getBaseUrl();
+
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/`, changeFrequency: 'weekly', priority: 1 },
+    { url: `${baseUrl}/projects`, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/contact`, changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${baseUrl}/privacy-sparkshare`, changeFrequency: 'yearly', priority: 0.3 },
+    // Old projects section still present in the app
+    { url: `${baseUrl}/projects-old`, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${baseUrl}/projects-old/chat-app`, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${baseUrl}/projects-old/dax-correlation`, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${baseUrl}/projects-old/financial`, changeFrequency: 'yearly', priority: 0.2 },
+  ];
+
+  let dynamicRoutes: MetadataRoute.Sitemap = [];
+  if (isContentfulConfigured) {
+    try {
+      const slugs = await getAllProjectSlugs();
+      dynamicRoutes = slugs.map((slug) => ({
+        url: `${baseUrl}/projects/${slug}`,
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      }));
+    } catch (e) {
+      // Fallback silently to static routes only
+      console.warn('Sitemap: failed to load Contentful slugs, returning static routes only');
+    }
+  }
+
+  return [...staticRoutes, ...dynamicRoutes];
+}
