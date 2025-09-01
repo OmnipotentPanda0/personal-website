@@ -50,10 +50,11 @@ function renderContentBlock(block: TextBlock | ImageBlock | VideoBlock | CodeBlo
           <Image 
             src={block.image} 
             alt={block.imageTitle || block.caption || ''} 
-            width={1000} 
-            height={600} 
+            width={1200} 
+            height={750} 
             loading="lazy"
             decoding="async"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
             className="w-full rounded-lg"
           />
           {(block.imageTitle || block.imageDescription || block.caption) && (
@@ -144,6 +145,12 @@ export default function CmsProjectSite({ project }: Props) {
     : (coverImage ? `/images/projects/${coverImage}` : '/images/projects/WebRTCApp.png');
   const dateText = formatDate(publishDate);
 
+  // Tiny SVG shimmer placeholder for a smoother perceived load on slow connections
+  const shimmer = (w: number, h: number) =>
+    `data:image/svg+xml;base64,${Buffer.from(
+      `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g"><stop stop-color="#f6f7f8" offset="20%"/><stop stop-color="#edeef1" offset="50%"/><stop stop-color="#f6f7f8" offset="70%"/></linearGradient></defs><rect width="${w}" height="${h}" fill="#f6f7f8"/><rect id="r" width="${w}" height="${h}" fill="url(#g)"/></svg>`
+    ).toString('base64')}`;
+
   return (
     <div className="flex w-full h-full justify-center px-4 sm:px-5 lg:px-8">
       {/* Responsive width with proper mobile padding */}
@@ -179,17 +186,20 @@ export default function CmsProjectSite({ project }: Props) {
           <p className="text-sm sm:text-base md:text-lg leading-relaxed">{excerpt}</p>
         </div>
         
-        {src && (
+    {src && (
           <div className="overflow-hidden mt-4 sm:mt-6 -mx-4 sm:-mx-4 md:-mx-10 lg:-mx-20 xl:-mx-28">
             <Image
               className="w-full rounded-none sm:rounded-lg"
               src={src}
-              width={2000}
-              height={1200}
+      width={1400}
+      height={840}
               alt={coverImageTitle || title}
-              loading="eager"
-              decoding="async"
-              sizes="(min-width: 1280px) 1200px, (min-width: 1024px) 1000px, (min-width: 768px) 90vw, 100vw"
+      priority
+      fetchPriority="high"
+      quality={75}
+      placeholder="blur"
+      blurDataURL={shimmer(20, 12)}
+      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
             />
             {(coverImageTitle || coverImageDescription) && (
               <div className="mt-2 text-xs sm:text-sm font-roboto px-4 sm:px-0">
