@@ -8,7 +8,7 @@ export default async function Page() {
   const projects = await getAllProjects();
 
   return (
-    <PageTemplate selected="Projects">
+  <PageTemplate selected="Projects" animate={false}>
       <div className="flex justify-center pt-10 min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {projects.map((p) => (

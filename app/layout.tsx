@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
-import AnimatePresenceProvider from "./components/AnimatePresenceProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -69,9 +68,7 @@ export default function RootLayout({
           //   'url("/images/blurry-gradient-haikei(2).svg") center/cover no-repeat',
         }}
       >
-        <AnimatePresenceProvider>
-          {children}
-        </AnimatePresenceProvider>
+  {children}
       </body>
     </html>
   );

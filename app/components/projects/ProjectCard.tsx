@@ -19,7 +19,7 @@ function ProjectCard(props: Props) {
     const desc = description ?? '';
 
     return (
-  <Link href={`${basePath}/${link}`}>
+  <Link href={`${basePath}/${link}`} prefetch={false}>
     <div className='w-[326px] h-[435px] transition-transform duration-200 hover:-translate-y-1'>
           <div>
             <Image
