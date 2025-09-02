@@ -1,13 +1,10 @@
 import type { MetadataRoute } from 'next';
 
-import { getAllProjectSlugs, isContentfulConfigured } from '@/lib/contentful';
+import { getAllProjectSlugsWithDates, isContentfulConfigured } from '@/lib/contentful';
 
+// Hardcode canonical site URL as requested
 function getBaseUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL;
-  if (envUrl) return envUrl.replace(/\/$/, '');
-  const vercel = process.env.VERCEL_URL;
-  if (vercel) return `https://${vercel.replace(/\/$/, '')}`;
-  return 'http://localhost:3000';
+  return 'https://johannsetzer.com';
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -28,11 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let dynamicRoutes: MetadataRoute.Sitemap = [];
   if (isContentfulConfigured) {
     try {
-      const slugs = await getAllProjectSlugs();
-      dynamicRoutes = slugs.map((slug) => ({
+      const items = await getAllProjectSlugsWithDates();
+      dynamicRoutes = items.map(({ slug, publishDate }) => ({
         url: `${baseUrl}/projects/${slug}`,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
+        lastModified: publishDate ? new Date(publishDate) : undefined,
       }));
     } catch (e) {
       // Fallback silently to static routes only

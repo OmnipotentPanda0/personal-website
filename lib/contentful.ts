@@ -135,6 +135,28 @@ export async function getAllProjectSlugs(): Promise<string[]> {
   }
 }
 
+export type ProjectSlugWithDate = { slug: string; publishDate: string | null };
+
+export async function getAllProjectSlugsWithDates(): Promise<ProjectSlugWithDate[]> {
+  if (!isContentfulConfigured) return [];
+  const query = /* GraphQL */ `
+    query GetSlugsWithDates {
+      blogPostCollection {
+        items {
+          slug
+          publishDate
+        }
+      }
+    }
+  `;
+  try {
+    const data = await cf<{ blogPostCollection: { items: { slug: string; publishDate?: string | null }[] } }>(query);
+    return (data.blogPostCollection.items || []).map((i) => ({ slug: i.slug, publishDate: i.publishDate ?? null }));
+  } catch {
+    return [];
+  }
+}
+
 export async function getProjectBySlug(slug: string): Promise<CmsProject | null> {
   if (!isContentfulConfigured) return null;
   
