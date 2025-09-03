@@ -20,7 +20,7 @@ export default function Home() {
               className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed border-2 border-[#4A90E2] p-4 lg:p-6 bg-white/10 backdrop-blur-sm"
               style={{ fontFamily: "Roboto, sans-serif", color: "#2C3E50" }}
             >
-              Auf dieser Webseite kannst du mehr über mich erfahren. In Zukunft werden hier Blogartikel erscheinen, die sich mit Themen beschäftigen, die mich interessieren und anderen Menschen einen Mehrwert bieten – insbesondere rund um meine FileSharing-App SparkShare.
+              On this website, you can learn more about me. In the future, blog posts will appear here covering topics that interest me and provide value to others - especially around my file-sharing app SparkShare.
             </h2>
             {/* Emoji row spanning the width of the box */}
             <div

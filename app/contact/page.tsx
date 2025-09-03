@@ -10,14 +10,14 @@ function ContactPage() {
             className="text-4xl md:text-5xl lg:text-4xl font-medium leading-tight"
             style={{ fontFamily: "Montserrat, sans-serif", color: "#2C3E50" }}
           >
-            Kontakt
+            Contact
           </h1>
           <hr className="mt-4 mb-7 border-t-2 border-[#4A90E2] w-1/4 mx-auto" />
           <p
             className="text-lg md:text-xl lg:text-1xl font-medium leading-relaxed"
             style={{ fontFamily: "Roboto, sans-serif", color: "#2C3E50" }}
           >
-            Hier kannst du mich erreichen:
+            Here’s how you can reach me:
           </p>
         </div>
 

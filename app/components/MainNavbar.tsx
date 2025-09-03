@@ -28,13 +28,13 @@ export default function MainNavbar({ selected }: MainNavbarProps) {
             href="/articles"
             className={`${baseLink} ${selected === 'Articles' ? active : ''}`}
           >
-            Artikel
+            Articles
           </Link>
           <Link
             href="/contact"
             className={`${baseLink} ${selected === 'Contact' ? active : ''}`}
           >
-            Kontakt
+            Contact
           </Link>
         </div>
       </div>
