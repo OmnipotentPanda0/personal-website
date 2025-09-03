@@ -154,7 +154,7 @@ export default function CmsProjectSite({ project }: Props) {
   return (
     <div className="flex w-full h-full justify-center px-4 sm:px-5 lg:px-8">
       {/* Responsive width with proper mobile padding */}
-      <div className="w-full max-w-[750px] text-[#2C3E50] font-roboto">
+      <div className="w-full max-w-[750px] text-[#2C3E50] font-roboto pb-20 sm:pb-24 md:pb-32">
         <div className="mt-8 sm:mt-12 md:mt-16 lg:mt-24 mb-4 sm:mb-6 md:mb-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-left leading-tight tracking-tight font-montserrat">{title}</h1>
           {(dateText || (tags && tags.length > 0)) && (
