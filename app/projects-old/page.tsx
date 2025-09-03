@@ -9,7 +9,7 @@ function Page(props: Props) {
 
     return (
         <>
-            <MainNavbar selected="Projects" />
+            <MainNavbar selected="Articles" />
             <div className='flex justify-center pt-10 min-h-screen'>
                 <div className='grid grid-cols-3 gap-6 res:flex res:flex-col'>
                     <ProjectCard link='chat-app' title='WebRTC ChatApp – Direkt und Sicher' description='Ein Echtzeit-Chatroom, in dem Sie direkt mit anderen Nutzern kommunizieren und Dateien austauschen – ohne Server dazwischen, dank der direkten Peer-to-Peer-Verbindung über WebRTC.' image='WebRTCApp.png'></ProjectCard>

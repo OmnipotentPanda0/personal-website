@@ -8,7 +8,7 @@ function Page(props: Props) {
 
     return (
         <>
-            <MainNavbar selected="Projects" />
+            <MainNavbar selected="Articles" />
             <div className='flex w-full h-screen justify-center items-center'>
                 <h1 className='text-2xl font-bold mb-52'>Bald Verfügbar...</h1>
             </div>

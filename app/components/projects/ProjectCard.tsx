@@ -9,12 +9,12 @@ interface Props {
     description?: string; // optional, falls kein Auszug vorhanden ist
     image: string; // kann Dateiname oder absolute URL sein
     link: string; // slug oder vollständiger Pfadteil
-    basePath?: string; // optionaler Basis-Pfad, Standard: "/projects"
+  basePath?: string; // optionaler Basis-Pfad, Standard: "/articles"
     tags?: Tag[]; // optional, Tags für den Blog Post
 }
 
 function ProjectCard(props: Props) {
-    const { title, description, image, link, basePath = "/projects", tags } = props
+  const { title, description, image, link, basePath = "/articles", tags } = props
     const src = image.startsWith('http') ? image : ("/images/project_cards/" + image);
     const desc = description ?? '';
 

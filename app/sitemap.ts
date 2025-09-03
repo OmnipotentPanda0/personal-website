@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, changeFrequency: 'weekly', priority: 1 },
-    { url: `${baseUrl}/projects`, changeFrequency: 'weekly', priority: 0.9 },
+  { url: `${baseUrl}/articles`, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/contact`, changeFrequency: 'yearly', priority: 0.5 },
     { url: `${baseUrl}/privacy-sparkshare`, changeFrequency: 'yearly', priority: 0.3 },
     // Old projects section still present in the app
@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
       const items = await getAllProjectSlugsWithDates();
       dynamicRoutes = items.map(({ slug, publishDate }) => ({
-        url: `${baseUrl}/projects/${slug}`,
+        url: `${baseUrl}/articles/${slug}`,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
         lastModified: publishDate ? new Date(publishDate) : undefined,

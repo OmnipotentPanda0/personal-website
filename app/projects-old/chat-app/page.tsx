@@ -9,7 +9,7 @@ function Page(props: Props) {
 
   return (
     <>
-  <MainNavbar selected="Projects" />
+  <MainNavbar selected="Articles" />
       <ProjectSite
         title="WebRTC ChatApp – Direkt und Sicher"
         subtitle="Ein Echtzeit-Chatroom, in dem Sie direkt mit anderen Nutzern kommunizieren und Dateien austauschen – ohne Server dazwischen, dank der direkten Peer-to-Peer-Verbindung über WebRTC."

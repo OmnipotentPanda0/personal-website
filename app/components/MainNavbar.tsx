@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-type SelectedKey = 'Home' | 'Projects' | 'Contact';
+type SelectedKey = 'Home' | 'Articles' | 'Contact';
 
 interface MainNavbarProps {
   selected?: SelectedKey;
@@ -25,10 +25,10 @@ export default function MainNavbar({ selected }: MainNavbarProps) {
             Home
           </Link>
           <Link
-            href="/projects"
-            className={`${baseLink} ${selected === 'Projects' ? active : ''}`}
+            href="/articles"
+            className={`${baseLink} ${selected === 'Articles' ? active : ''}`}
           >
-            Projekte
+            Artikel
           </Link>
           <Link
             href="/contact"

@@ -6,7 +6,7 @@ import PageTransition from './PageTransition';
 // Lazy-load the client-only animation shell to keep pages without animations pure server components
 const AnimatedShell = dynamic(() => import('./AnimatedShell'), { ssr: true });
 
-type SelectedKey = 'Home' | 'Projects' | 'Contact';
+type SelectedKey = 'Home' | 'Articles' | 'Contact';
 
 interface PageTemplateProps {
   children: ReactNode;

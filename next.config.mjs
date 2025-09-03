@@ -9,6 +9,12 @@ const nextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	async redirects() {
+		return [
+			{ source: '/projects', destination: '/articles', permanent: true },
+			{ source: '/projects/:slug', destination: '/articles/:slug', permanent: true },
+		];
+	},
 };
 
 export default nextConfig;

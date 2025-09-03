@@ -2,8 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 
 interface Props {
-    // define if Home, Projects, or Contact is selected
-    selected: 'Home' | 'Projects' | 'Contact'
+    // define if Home, Articles, or Contact is selected
+    selected: 'Home' | 'Articles' | 'Contact'
 }
 
 function Navbar({ selected }: Props) {
@@ -17,8 +17,8 @@ function Navbar({ selected }: Props) {
                 <Link href="/">
                     <h2 className={selected === 'Home' ? 'underline underline-offset-4' : ''} >Home</h2>
                 </Link>
-                <Link href="/projects">
-                    <h2 className={selected === 'Projects' ? 'underline underline-offset-4' : ''} >Projects</h2>
+                <Link href="/articles">
+                    <h2 className={selected === 'Articles' ? 'underline underline-offset-4' : ''} >Articles</h2>
                 </Link>
                 <Link href="/contact">
                     <h2 className={selected === 'Contact' ? 'underline underline-offset-4' : ''} >Contact</h2>
