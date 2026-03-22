@@ -47,23 +47,23 @@ export function renderSimpleRichText(richDoc: Document, index: number) {
         <ol className="list-decimal pl-6 mb-4 space-y-1">{children}</ol>
       ),
       [BLOCKS.LIST_ITEM]: (_node, children) => (
-        <li className="leading-relaxed">{children}</li>
+        <li className="leading-relaxed [&_p]:mb-0">{children}</li>
       ),
       [BLOCKS.QUOTE]: (_node, children) => (
         <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 italic">{children}</blockquote>
       ),
       [BLOCKS.HR]: () => <hr className="my-6 border-gray-200" />,
       [BLOCKS.TABLE]: (_node, children) => (
-        <div className="my-6 w-full overflow-x-auto rounded-lg border border-gray-200">
+        <div className="my-6 -mx-4 sm:-mx-6 md:-mx-10 lg:-mx-16 overflow-x-auto rounded-lg border border-gray-400">
           <table className="min-w-full border-collapse text-left text-sm">{children}</table>
         </div>
       ),
-      [BLOCKS.TABLE_ROW]: (_node, children) => <tr className="border-b border-gray-200">{children}</tr>,
+      [BLOCKS.TABLE_ROW]: (_node, children) => <tr className="border-b border-gray-400">{children}</tr>,
       [BLOCKS.TABLE_CELL]: (_node, children) => (
-        <td className="border-r border-gray-200 px-4 py-3 align-top last:border-r-0">{children}</td>
+        <td className="border-r border-gray-400 px-4 py-3 align-top last:border-r-0">{children}</td>
       ),
       [BLOCKS.TABLE_HEADER_CELL]: (_node, children) => (
-        <th className="border-r border-gray-200 bg-gray-50 px-4 py-3 align-top font-semibold last:border-r-0">
+        <th className="border-r border-gray-400 bg-gray-100 px-4 py-3 align-top font-semibold last:border-r-0">
           {children}
         </th>
       ),
