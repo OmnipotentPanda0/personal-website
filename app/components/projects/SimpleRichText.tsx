@@ -2,6 +2,15 @@ import { documentToReactComponents, type Options } from '@contentful/rich-text-r
 import { BLOCKS, INLINES, MARKS, type Document } from '@contentful/rich-text-types';
 import Image from 'next/image';
 
+function getFieldValue(value: any) {
+  if (!value) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object') {
+    return value['en-US'] ?? value.en ?? Object.values(value)[0] ?? '';
+  }
+  return '';
+}
+
 // Simplified rich text renderer with minimal classes to reduce style calculation overhead
 export function renderSimpleRichText(richDoc: Document, index: number) {
   const options: Options = {
@@ -44,10 +53,24 @@ export function renderSimpleRichText(richDoc: Document, index: number) {
         <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 italic">{children}</blockquote>
       ),
       [BLOCKS.HR]: () => <hr className="my-6 border-gray-200" />,
+      [BLOCKS.TABLE]: (_node, children) => (
+        <div className="my-6 w-full overflow-x-auto rounded-lg border border-gray-200">
+          <table className="min-w-full border-collapse text-left text-sm">{children}</table>
+        </div>
+      ),
+      [BLOCKS.TABLE_ROW]: (_node, children) => <tr className="border-b border-gray-200">{children}</tr>,
+      [BLOCKS.TABLE_CELL]: (_node, children) => (
+        <td className="border-r border-gray-200 px-4 py-3 align-top last:border-r-0">{children}</td>
+      ),
+      [BLOCKS.TABLE_HEADER_CELL]: (_node, children) => (
+        <th className="border-r border-gray-200 bg-gray-50 px-4 py-3 align-top font-semibold last:border-r-0">
+          {children}
+        </th>
+      ),
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const fields = (node as any)?.data?.target?.fields;
-        const fileUrl = fields?.file?.url || fields?.file?.en?.url || fields?.file?.['en-US']?.url;
-        const title = fields?.title || fields?.title?.en || fields?.title?.['en-US'];
+        const fileUrl = getFieldValue(fields?.file?.url) || getFieldValue(fields?.file);
+        const title = getFieldValue(fields?.title);
         if (!fileUrl) return null;
         const src = fileUrl.startsWith('http') ? fileUrl : `https:${fileUrl}`;
         return (
