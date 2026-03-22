@@ -54,7 +54,7 @@ export function renderSimpleRichText(richDoc: Document, index: number) {
       ),
       [BLOCKS.HR]: () => <hr className="my-6 border-gray-200" />,
       [BLOCKS.TABLE]: (_node, children) => (
-        <div className="my-6 -mx-4 sm:-mx-6 md:-mx-10 lg:-mx-16 overflow-x-auto rounded-lg border border-gray-400">
+        <div className="my-6 -mx-6 sm:-mx-8 md:-mx-14 lg:-mx-20 overflow-x-auto rounded-lg border border-gray-400">
           <table className="min-w-full border-collapse text-left text-sm">{children}</table>
         </div>
       ),
