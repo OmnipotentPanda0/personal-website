@@ -66,6 +66,10 @@ export function renderSimpleRichText(richDoc: Document, index: number) {
         );
       },
     },
+    renderText: (text) =>
+      text.split('\n').flatMap((part, index) =>
+        index === 0 ? part : [<br key={index} />, part]
+      ),
   };
 
   return (
